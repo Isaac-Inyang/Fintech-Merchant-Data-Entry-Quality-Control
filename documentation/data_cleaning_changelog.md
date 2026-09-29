@@ -30,7 +30,7 @@ The project uses two simulated source datasets.
 
 **File:**
 
-[Merchant_upload_file](.\data\raw\merchant_upload_batch.csv)
+[Merchant upload file](/data/raw/merchant_upload_batch.csv)
 
 
 This represents an incoming merchant inventory bulk-upload file.
@@ -41,7 +41,7 @@ The dataset intentionally contains data-quality and data-entry issues that requi
 
 **File:**
 
-[CRM_master_data_file](.\data\raw\crm_master_data.csv)
+[CRM master data file](/data/raw/crm_master_data.csv)
 
 
 This represents the simulated authoritative product information used to validate the incoming merchant upload.
@@ -50,7 +50,7 @@ This represents the simulated authoritative product information used to validate
 
 ### Working Environment
 
-[Fintech_merchant_data_quality file](.\workbook\fintech_merchant_data_quality.xlsx)
+[Fintech merchant file](/workbook/fintech_merchant_data_quality.xlsx)
 
 
 
@@ -58,9 +58,9 @@ The Excel workbook contains the Power Query workflow, cleaned data, reconciliati
 
 ### Processed Outputs
 
-[Cleaned_merchant_data](.\data\processed\merchant_upload_clean.csv)
+[Cleaned merchant data](/data/processed/merchant_upload_clean.csv)
 
-[discrepancy_audit_report](.\data\processed\discrepancy_report.csv)
+[discrepancy audit report](/data/processed/discrepancy_report.csv)
 
 
 The first file contains the cleaned Merchant Upload Data.
@@ -352,17 +352,17 @@ Simulated Merchant Upload Data
 
 The final cleaned Merchant Upload Data was exported as:
 
-[Clean Merchant Upload](.\data\processed\merchant_upload_clean.csv)
+[Clean Merchant Upload](/data/processed/merchant_upload_clean.csv)
 
 
 The reconciliation exceptions were isolated as:
 
-[Discrepancy report](.\data\processed\discrepancy_report.csv)
+[Discrepancy report](/data/processed/discrepancy_report.csv)
 `
 
 The complete working environment is retained in:
 
-[Fintech Merchant Wookbook](.\workbook\fintech_merchant_data_quality.xlsx)
+[Fintech Merchant Wookbook](/workbook/fintech_merchant_data_quality.xlsx)
 
 
 ---
