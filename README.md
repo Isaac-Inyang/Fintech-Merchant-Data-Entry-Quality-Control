@@ -1,303 +1,122 @@
 # Fintech Merchant Data Entry & Quality Control
 
-A simulated fintech merchant inventory data-entry and quality-control project demonstrating how Excel and Power Query can be used to clean, standardize, validate, reconcile, and prepare merchant inventory data for bulk upload.
+Turning messy merchant uploads into review-ready data.
 
-> **Project type:** Simulated portfolio project
-> **Tools:** Microsoft Excel, Power Query
-> **Output:** Clean UTF-8 CSV suitable for downstream processing
-
----
+This simulated fintech data-quality project uses Microsoft Excel and Power Query to standardize 1,000 merchant inventory records, reconcile uploaded prices and categories against a reference CRM dataset, and flag 109 records requiring review. It demonstrates practical skills in data cleaning, data validation, reconciliation, and operational exception reporting.
 
 ## Project Overview
 
-This project simulates a fintech data-entry workflow where merchant inventory records need to be prepared for a bulk-upload process.
+Merchant bulk uploads can contain inconsistent product identifiers, incorrect data types, missing values, and discrepancies against existing records. These issues can affect data accuracy and downstream operations if they are not identified before processing.
 
-The source dataset intentionally contains common data-entry and data-quality problems, including:
+This project simulates that workflow using two datasets: incoming Merchant Upload Data and a reference CRM Master Data table. I used Power Query to clean and standardize the merchant data, reconcile it against the reference dataset, and identify records requiring further review.
 
-* Truncated SKU codes
-* Inconsistent category values
-* Corrupted character encodings
-* Text values in numeric fields
-* Missing/invalid date values
-* Inconsistent date formats
-* Price differences between uploaded records and an internal reference dataset
-* Category differences between uploaded records and an internal reference dataset
+The project also includes Excel data-validation controls designed to reduce common data-entry errors.
 
-I used **Microsoft Excel and Power Query** to clean and standardize the data, perform a reconciliation against a simulated internal master dataset, identify records requiring review, and prepare a final production CSV.
-
-This is a **simulated project created for portfolio and skills-demonstration purposes**. It is not based on confidential fintech company data or an actual company's internal workflow.
-
----
+> **Disclaimer:** This is a fully simulated portfolio project. All datasets, product records, CRM reference data, and business rules were created or simulated for demonstration purposes. No real fintech company data or proprietary systems were used.
 
 ## Objectives
 
-The project was designed to demonstrate the ability to:
-
-1. Clean messy data using Power Query.
-2. Standardize fields before bulk upload.
-3. Correct structural issues in inventory identifiers.
-4. Handle missing and malformed values.
-5. Reconcile incoming records against a reference dataset.
-6. Identify discrepancies requiring manual review.
-7. Add Excel validation controls to reduce future data-entry errors.
-8. Produce a clean CSV export for downstream use.
-
----
+- Clean and standardize incoming merchant inventory data.
+- Correct inconsistent SKU formats and category values.
+- Handle corrupted values, missing dates, and data-type inconsistencies.
+- Compare merchant-uploaded values against reference records.
+- Flag price and category discrepancies for review.
+- Implement spreadsheet validation controls to reduce future input errors.
+- Prepare a cleaned CSV for downstream processing.
 
 ## Tools & Technologies
 
-* **Microsoft Excel**
-* **Power Query**
-* **CSV**
-* Excel Data Validation
-* Power Query Merge
-* Conditional logic
-* Data type transformation
-* Text transformation
+1. **Microsoft Excel** — working environment, data validation, and discrepancy reporting.
+2. **Power Query** — data cleaning, transformation, merging, and reconciliation.
+3. **CSV** — source datasets and processed data exports.
 
----
+## Data Sources
 
-## Dataset
+The project uses two simulated datasets:
 
-The project uses simulated fintech merchant inventory data.
+| Dataset              | Purpose                                                                          |
+| -------------------- | -------------------------------------------------------------------------------- |
+| Merchant Upload Data | Incoming inventory records requiring cleaning and validation.                    |
+| CRM Master Data      | Reference product information used to check the accuracy of the merchant upload. |
 
-The main fields include:
+`Product_ID` serves as the matching key between the two datasets.
 
-| Field          | Description                                 |
-| -------------- | ------------------------------------------- |
-| `Product_ID`   | Unique identifier for the inventory product |
-| `SKU_Code`     | Inventory tracking code                     |
-| `Product_Name` | Product description/name                    |
-| `Category`     | Product category                            |
-| `Price`        | Merchant/product price                      |
-| `Stock_Level`  | Available stock quantity                    |
-| `Date_Added`   | Date the product was added                  |
+## Workflow
 
-A separate simulated **CRM/System Master** dataset was used as the reference point for reconciliation.
+1. **Import:** Load the Merchant Upload Data and CRM Master Data into the Excel/Power Query environment.
+2. **Clean:** Standardize SKU codes and categories, convert numeric fields to appropriate data types, and handle corrupted values and missing dates.
+3. **Reconcile:** Merge the cleaned merchant data with the CRM reference data using `Product_ID`.
+4. **Identify discrepancies:** Compare price and category values and flag mismatches.
+5. **Review exceptions:** Isolate records requiring review in a discrepancy audit report.
+6. **Validate inputs:** Configure Excel data-validation rules for product identifiers, SKU codes, categories, and dates.
+7. **Export:** Prepare the cleaned merchant dataset as a UTF-8 CSV.
 
----
+## Key Results
 
-# 1. Data Cleaning
+The reconciliation process produced the following results:
 
-The initial dataset contained several data-quality problems.
+| Quality Check                  | Result |
+| ------------------------------ | -----: |
+| Merchant inventory records     |  1,000 |
+| Price mismatches identified    |     67 |
+| Category mismatches identified |     44 |
+| Records requiring review       |    109 |
 
-### SKU Code Standardization
+The discrepancy report consolidates records requiring review based on the configured reconciliation checks. These figures describe identified exceptions, not necessarily records that were subsequently corrected against the reference data.
 
-Some SKU codes were shorter than the expected 8-character structure.
+The cleaning process also standardized SKU codes to eight characters, aligned category values with the approved categories, converted price and stock fields to appropriate numeric types, and handled missing date values.
 
-I used Power Query to restore the missing leading zeros using:
+## Data Quality Controls
 
-```text
-Text.PadStart([SKU_Code], 8, "0")
-```
+The working Excel template includes:
 
-After cleaning, the SKU codes were standardized to 8 characters.
+1. **Category dropdown:** Restricts entries to the approved category list.
+2. **SKU length validation:** Requires SKU codes to contain exactly eight characters.
+3. **Date validation:** Requires valid dates later than 1 January 2024.
+4. **Product ID uniqueness validation:** Uses a custom Excel rule to reject duplicate product identifiers.
 
-### Price and Stock Fields
+These controls are intended to reduce common data-entry errors during subsequent use of the template.
 
-The `Price` and `Stock_Level` fields were converted to appropriate numeric data types for consistent downstream processing.
-
-Corrupted character values found in these fields were removed and replaced with blank values where appropriate.
-
-### Category Standardization
-
-Category values contained inconsistent casing and other string inconsistencies.
-
-The categories were standardized to the approved category values:
-
-* Apparel
-* Groceries
-* Provisions
-* Electronics
-* Drinks
-* Pharmacy
-
-### Date Cleaning
-
-`Date_Added` contained missing values represented by `N/A`, as well as several inconsistent date representations.
-
-The `N/A` placeholders were converted to blank/null values and inconsistent date values were parsed using the appropriate regional locale before being converted to a structured date type.
-
----
-
-# 2. Data Reconciliation
-
-After the initial cleaning process, the incoming merchant data was compared against a simulated internal CRM/System Master dataset.
-
-`Product_ID` was used as the relational key between the two datasets.
-
-The reconciliation checked for differences in:
-
-* Product price
-* Product category
-
-### Reconciliation Results
-
-The audit identified:
-
-| Check                    | Records |
-| ------------------------ | ------: |
-| Price mismatches         |      67 |
-| Category mismatches      |      44 |
-| Records requiring review |     109 |
-
-A `Requires_Review` field was used to isolate records containing reconciliation discrepancies.
-
-These records were also surfaced in a separate **Discrepancy Audit Report** within the Excel workbook.
-
-The purpose of the report was to make exceptions visible for manual review rather than silently overwriting differences.
-
----
-
-# 3. Data Entry Controls
-
-The working Excel template includes validation controls intended to reduce future data-entry errors.
-
-### Category Validation
-
-A dropdown list restricts category entries to the approved category values.
-
-### SKU Validation
-
-The `SKU_Code` field uses a text-length validation rule requiring exactly 8 characters.
-
-### Date Validation
-
-The `Date_Added` field uses Excel date validation to reduce invalid date entries.
-
-### Product ID Uniqueness
-
-A custom validation rule was implemented to prevent duplicate `Product_ID` values:
-
-```excel
-=COUNTIF($A:$A,A2)<=1
-```
-
-A hard-stop validation alert was configured to reject duplicate entries.
-
----
-
-# 4. Output
-
-The cleaned dataset was exported as a UTF-8 comma-delimited CSV.
-
-The production output contains:
-
-* 1,000 inventory records
-* Unique `Product_ID` values
-* Standardized 8-character SKU codes
-* Standardized product categories
-* Numeric price and stock fields
-* Structured date values
-* Records requiring reconciliation review identified separately
-
-The cleaned CSV represents the final output of the simulated data-entry preparation workflow.
-
----
-
-# 5. Workflow
-
-The overall workflow was:
+## Repository Structure
 
 ```text
-Raw Merchant Data
-        │
-        ▼
-Power Query Import
-        │
-        ▼
-Data Cleaning & Standardization
-        │
-        ├── SKU correction
-        ├── Category standardization
-        ├── Numeric type conversion
-        ├── Corrupted-value handling
-        └── Date cleaning
-        │
-        ▼
-Clean Merchant Dataset
-        │
-        ▼
-Power Query Merge
-        │
-        ▼
-CRM/System Master Reconciliation
-        │
-        ├── Price mismatch check
-        └── Category mismatch check
-        │
-        ▼
-Discrepancy Audit Report
-        │
-        ▼
-Excel Validation Controls
-        │
-        ▼
-Production CSV Export
+fintech-merchant-data-quality/
+├── README.md
+├── .gitignore
+├── data/
+│   ├── raw/
+│   │   ├── merchant_upload_data.csv
+│   │   └── crm_master_data.csv
+│   └── processed/
+│       ├── merchant_upload_clean.csv
+│       └── discrepancy_audit_report.csv
+├── workbook/
+│   └── fintech_merchant_data_quality.xlsx
+└── documentation/
+    └── data_cleaning_changelog.md
 ```
 
----
+**Repository contents:**
 
-# 6. What This Project Demonstrates
+- [Raw data](/data/raw) — simulated input datasets.
+- [Processed](/data/processed) — cleaned merchant data and discrepancy report.
+- [Workbook](/workbook) — Excel working file containing the cleaning, reconciliation, and validation workflow.
+- [Changelog](/documentation/data_cleaning_changelog.md) — detailed record of transformations, reconciliation checks, validation rules, and quality-assurance results.
 
-This project demonstrates practical experience with:
+## Skills Demonstrated
 
-* Data entry quality control
-* Data cleaning
-* Data standardization
-* Power Query transformations
-* Data validation
-* Data reconciliation
-* Exception identification
-* Spreadsheet quality controls
-* Preparing structured data for bulk upload
-* Working with messy operational data
+1. Data entry and quality control
+2. Data cleaning and standardization
+3. Microsoft Excel
+4. Power Query transformations and merging
+5. Data-type conversion and missing-value handling
+6. Reference-data reconciliation
+7. Discrepancy identification and exception reporting
+8. Excel data validation
+9. CSV export and data preparation
 
-The project also demonstrates an important data-operations principle:
+## Project Outcome
 
-> **Clean and validate incoming data before it reaches downstream systems, and isolate discrepancies rather than silently changing potentially important business values.**
+This project demonstrates how a structured spreadsheet workflow can help improve the consistency of incoming inventory data, identify discrepancies against a reference dataset, and prepare records for further processing.
 
----
-
-# 7. Project Files
-
-```text
-data/
-├── raw/
-│   └── fintech_data_entry_test.csv
-│
-└── processed/
-    └── fintech_data_entry_test_v1_clean.csv
-
-workbook/
-└── fintech_data_entry_test_working.xlsx
-
-documentation/
-└── data_cleaning_changelog.md
-```
-
-### Raw Data
-
-The raw dataset is retained separately from the processed output to preserve the original input and make the transformation process reproducible.
-
-### Working Workbook
-
-The Excel workbook contains the Power Query workflow, cleaned data, reconciliation results, discrepancy report, and data-entry validation controls.
-
-### Production Export
-
-The processed CSV represents the cleaned output prepared for downstream bulk-upload processing.
-
-### Changelog
-
-The changelog documents the cleaning, reconciliation, and quality-control steps performed during the project.
-
----
-
-# Disclaimer
-
-This is a **simulated fintech data-entry and data-quality project created for portfolio purposes**.
-
-The dataset, CRM/System Master data, business rules, and workflow are simulated. The project does not represent confidential data, proprietary processes, or an actual internal system belonging to a fintech company.
-
-The purpose of the project is to demonstrate practical data-entry, data-cleaning, reconciliation, validation, and quality-control skills using Microsoft Excel and Power Query.
+The central principle is to **clean incoming data, validate it against a reference source, and flag discrepancies for review rather than silently overwrite conflicting values**.
