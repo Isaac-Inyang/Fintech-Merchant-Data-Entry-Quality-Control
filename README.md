@@ -1,6 +1,6 @@
 # Fintech Merchant Data Entry & Quality Control
 
-Turning messy merchant uploads into review-ready data.
+**Turning messy merchant uploads into review-ready data.**
 
 This simulated fintech data-quality project uses Microsoft Excel and Power Query to standardize 1,000 merchant inventory records, reconcile uploaded prices and categories against a reference CRM dataset, and flag 109 records requiring review. It demonstrates practical skills in data cleaning, data validation, reconciliation, and operational exception reporting.
 
