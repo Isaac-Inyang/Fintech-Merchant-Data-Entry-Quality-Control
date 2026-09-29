@@ -1,9 +1,14 @@
 # Data Entry Cleaning, Integrity & Reconciliation Changelog
 
 **Candidate:** Isaac Uko
+
 **Project:** Fintech Merchant Data Entry & Quality Control Simulation
+
 **Build Version:** v1.0
+
 **Status:** Clean Portfolio Build
+
+**Date:** 29/09/2026
 
 ---
 
