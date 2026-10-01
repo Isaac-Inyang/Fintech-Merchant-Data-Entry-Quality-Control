@@ -89,7 +89,7 @@ fintech-merchant-data-quality/
 │   │   └── crm_master_data.csv
 │   └── processed/
 │       ├── merchant_upload_clean.csv
-│       └── discrepancy_audit_report.csv
+│       └── discrepancy_report.csv
 ├── workbook/
 │   └── fintech_merchant_data_quality.xlsx
 └── documentation/
